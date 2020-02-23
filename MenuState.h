@@ -1,6 +1,7 @@
 #pragma once
 #include"State.h"
 #include"OptionSelect.h"
+#include"AnimatedObject.h"
 
 class MenuState :
 	public State
@@ -10,6 +11,7 @@ private:
 	OptionSelect optionSelect;
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;
+	AnimatedObject torch, test;
 public:
 	MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager);
 	virtual ~MenuState();
@@ -19,4 +21,5 @@ public:
 	void updateInput(const float& dt) override;
 	void update(const float& dt) override;
 	void draw(sf::RenderTarget* target = nullptr) override;
+	OptionSelect* getOS() { return &optionSelect; }
 };

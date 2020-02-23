@@ -71,8 +71,10 @@ void Game::updateSFEvents()
 			window->close();
 		if (SFEvent.type == sf::Event::Resized)
 		{
-			//sf::FloatRect view(0, 0, SFEvent.size.width, SFEvent.size.height);
-			//window->setView(sf::View(view));
+			//Fix view
+			sf::FloatRect view(0, 0, SFEvent.size.width, SFEvent.size.height);
+			window->setView(sf::View(view));
+			
 		}
 		if (SFEvent.type == sf::Event::KeyPressed)
 		{
@@ -102,6 +104,8 @@ void Game::loadAssets()
 {
 	manager.loadTexture("MainMenuBackground", MainMenuBackground);
 	manager.loadFont("Khand", Khand);
+	manager.loadAnimation("Torch", Torch, Torch_d, Torch_fc);
+	manager.loadAnimation("Test", Test, Test_d, Test_fc);
 }
 
 void Game::update()

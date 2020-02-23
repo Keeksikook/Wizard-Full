@@ -92,6 +92,11 @@ void OptionSelect::draw(sf::RenderTarget* window)
 	
 }
 
+void OptionSelect::setSize(sf::Vector2u position)
+{
+	this->position = position;
+}
+
 void OptionSelect::next()
 {
 	styleBefore();

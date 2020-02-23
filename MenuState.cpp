@@ -3,10 +3,16 @@
 MenuState::MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager)
 	:
 	State(window, event, manager),
-	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260})
+	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}),
+	torch({200, 200}, manager),
+	test({400, 200}, manager)
+	
 {
 	backgroundSprite.setTexture(manager.texture("MainMenuBackground"));
 	backgroundSprite.setScale(960.f / 1024.f, 540.f / 1024.f);
+	torch.setAnimation(manager.animation("Torch"));
+	test.setAnimation(manager.animation("Test"));
+
 }
 
 MenuState::~MenuState()
@@ -29,6 +35,8 @@ void MenuState::update(const float& dt)
 	{
 
 		updateInput(dt);
+		torch.update();
+		test.update();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			optionSelect.next();
@@ -46,5 +54,7 @@ void MenuState::draw(sf::RenderTarget* target)
 		target = window;
 	target->draw(backgroundSprite);
 	optionSelect.draw(target);
+	torch.draw(target);
+	test.draw(target);
 }
 
