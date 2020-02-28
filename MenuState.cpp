@@ -81,6 +81,14 @@ void MenuState::handleEvents()
 			{
 				optionSelect.next();
 			}
+			else if (event.key.code == sf::Keyboard::Up)
+			{
+				optionSelect.prev();
+			}
+			else if (event.key.code == sf::Keyboard::Down)
+			{
+				optionSelect.next();
+			}
 			break;
 		}
 	}
