@@ -26,6 +26,7 @@ public:
 	void setSize(sf::Vector2u position);
 	void update();
 	void next();
+
 	void prev();
 	void select();
 };
