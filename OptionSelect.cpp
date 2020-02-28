@@ -110,3 +110,25 @@ void OptionSelect::prev()
 	decrement();
 	styleAfter();
 }
+
+void OptionSelect::update(sf::RenderWindow& window)
+{
+	auto mousePos = sf::Mouse::getPosition(window);
+
+	//Find the hovered option
+	for (auto& text : options)
+	{
+		//If an option is under the cursor...
+		if (text.getGlobalBounds().contains(sf::Vector2f(mousePos)))
+		{
+			//Remove 'selected' style from currently selected item
+			styleBefore();
+
+			//Update selection pointer
+			cursorPtr = &text;
+			
+			//Set 'selected' style on the currently selected item
+			styleAfter();
+		}
+	}
+}

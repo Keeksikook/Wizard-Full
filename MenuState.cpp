@@ -64,6 +64,9 @@ void MenuState::handleEvents()
 				window->setView(sf::View(view));
 			}
 			break;
+		case sf::Event::MouseMoved:
+			optionSelect.update(*window);
+			break;
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::P)
 			{
