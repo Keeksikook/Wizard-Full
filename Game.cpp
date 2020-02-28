@@ -63,33 +63,6 @@ Game::~Game()
 
 //Functions
 
-void Game::updateSFEvents()
-{
-	while (window->pollEvent(SFEvent))
-	{
-		if (SFEvent.type == sf::Event::Closed)
-			window->close();
-		if (SFEvent.type == sf::Event::Resized)
-		{
-			//Fix view
-			sf::FloatRect view(0, 0, SFEvent.size.width, SFEvent.size.height);
-			window->setView(sf::View(view));
-			
-		}
-		if (SFEvent.type == sf::Event::KeyPressed)
-		{
-			if (SFEvent.key.code == sf::Keyboard::P)
-			{
-				states.top()->togglePause();
-			}
-			if (SFEvent.key.code == sf::Keyboard::BackSpace)
-			{
-				states.top()->setting = State::Exiting;
-			}
-		}
-	}
-}
-
 void Game::updateDt()
 {
 	dt = dtClock.restart().asSeconds();
@@ -110,7 +83,6 @@ void Game::loadAssets()
 
 void Game::update()
 {
-	updateSFEvents();
 	if (!states.empty())
 	{
 		states.top()->update(dt);
@@ -122,6 +94,7 @@ void Game::update()
 		}
 		else
 		{
+			states.top()->handleEvents();
 			states.top()->update(dt);
 		}
 	}

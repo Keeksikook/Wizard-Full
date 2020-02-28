@@ -24,7 +24,6 @@ private:
 	void loadAssets();
 
 	//Functions
-
 	void updateDt();
 
 
@@ -37,7 +36,6 @@ public:
 
 	//Functions
 
-	void updateSFEvents();
 	void update();
 	void draw();
 	void run();

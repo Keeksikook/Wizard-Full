@@ -12,7 +12,6 @@ MenuState::MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& m
 	backgroundSprite.setScale(960.f / 1024.f, 540.f / 1024.f);
 	torch.setAnimation(manager.animation("Torch"));
 	test.setAnimation(manager.animation("Test"));
-
 }
 
 MenuState::~MenuState()
@@ -33,18 +32,9 @@ void MenuState::update(const float& dt)
 {
 	if (setting == Running)
 	{
-
 		updateInput(dt);
 		torch.update();
 		test.update();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			optionSelect.next();
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			optionSelect.prev();
-		}
 	}
 }
 
@@ -56,5 +46,43 @@ void MenuState::draw(sf::RenderTarget* target)
 	optionSelect.draw(target);
 	torch.draw(target);
 	test.draw(target);
+}
+
+void MenuState::handleEvents()
+{
+	while (window->pollEvent(event))
+	{
+		switch (event.type)
+		{
+		case sf::Event::Closed:
+			window->close();
+			break;
+		case sf::Event::Resized:
+			//Fix view 
+			{ //This block is needed to avoid C2360
+				sf::FloatRect view(0, 0, event.size.width, event.size.height);
+				window->setView(sf::View(view));
+			}
+			break;
+		case sf::Event::KeyPressed:
+			if (event.key.code == sf::Keyboard::P)
+			{
+				togglePause();
+			}
+			else if (event.key.code == sf::Keyboard::BackSpace)
+			{
+				setting = State::Exiting;
+			}
+			else if (event.key.code == sf::Keyboard::W)
+			{
+				optionSelect.prev();
+			}
+			else if (event.key.code == sf::Keyboard::S)
+			{
+				optionSelect.next();
+			}
+			break;
+		}
+	}
 }
 

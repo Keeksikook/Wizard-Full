@@ -28,9 +28,12 @@ public:
 	virtual void update(const float& dt) = 0;
 	virtual void updateInput(const float& dt) = 0;
 	virtual void draw(sf::RenderTarget* target = nullptr) = 0;
+	virtual void handleEvents() = 0;
 
 
 	const bool getQuit() const;
+
+	//Pause
 	void pause() { if (pausable) setting = Situation::Paused; else perror("This state cannot be paused!\n"); }
 	void unPause() { if (pausable) setting = Situation::Running; else perror("This state cannot be paused!\n"); }
 	void togglePause() { if (setting == Paused) unPause(); else pause(); }
