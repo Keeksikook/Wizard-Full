@@ -3,7 +3,7 @@
 MenuState::MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager)
 	:
 	State(window, event, manager),
-	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}),
+	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}, this),
 	torch({200, 200}, manager),
 	test({400, 200}, manager)
 	
@@ -72,6 +72,14 @@ void MenuState::handleEvents()
 			{
 				togglePause();
 			}
+			if (event.key.code == sf::Keyboard::Pause)
+			{
+				togglePause();
+			}
+			if (event.key.code == sf::Keyboard::Enter)
+			{
+				optionSelect.select();
+			}
 			else if (event.key.code == sf::Keyboard::BackSpace)
 			{
 				setting = State::Exiting;
@@ -84,11 +92,27 @@ void MenuState::handleEvents()
 			{
 				optionSelect.next();
 			}
+			else if (event.key.code == sf::Keyboard::A)
+			{
+				optionSelect.prev();
+			}
+			else if (event.key.code == sf::Keyboard::D)
+			{
+				optionSelect.next();
+			}
 			else if (event.key.code == sf::Keyboard::Up)
 			{
 				optionSelect.prev();
 			}
 			else if (event.key.code == sf::Keyboard::Down)
+			{
+				optionSelect.next();
+			}
+			else if (event.key.code == sf::Keyboard::Left)
+			{
+				optionSelect.prev();
+			}
+			else if (event.key.code == sf::Keyboard::Right)
 			{
 				optionSelect.next();
 			}

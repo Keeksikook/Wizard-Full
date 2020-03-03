@@ -6,15 +6,17 @@
 class OptionSelect
 {
 private:
-	sf::Text* cursorPtr; 
 	sf::Vector2u position;
-	std::vector<sf::Text> options;
 	unsigned optionHeight;
 
 
 	//MODEL
 	sf::Text notSelected, selected;
 
+
+protected:
+	sf::Text* cursorPtr; 
+	std::vector<sf::Text> options;
 
 	void styleBefore();
 	void styleAfter();
@@ -23,9 +25,9 @@ private:
 public:
 	OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2u position);
 	void draw(sf::RenderTarget* window);
-	void setSize(sf::Vector2u position);
+	void setPos(sf::Vector2u position);
 	void next();
 	void prev();
 	void update(sf::RenderWindow& window);
-	void select();
+	virtual void select() = 0;
 };

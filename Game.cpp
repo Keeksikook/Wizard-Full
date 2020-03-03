@@ -71,6 +71,7 @@ void Game::updateDt()
 void Game::initStates()
 {
 	states.push(new MenuState(window, SFEvent, manager));
+	states.push(new SplashScreenState(window, SFEvent, manager));
 }
 
 void Game::loadAssets()
@@ -79,6 +80,7 @@ void Game::loadAssets()
 	manager.loadFont("Khand", Khand);
 	manager.loadAnimation("Torch", Torch, Torch_d, Torch_fc);
 	manager.loadAnimation("Test", Test, Test_d, Test_fc);
+	manager.loadTexture("SplashScreenImage", SplashScreenImage);
 }
 
 void Game::update()

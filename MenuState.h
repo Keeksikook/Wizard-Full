@@ -1,6 +1,6 @@
 #pragma once
 #include"State.h"
-#include"OptionSelect.h"
+#include"OptionSelectMM.h"
 #include"AnimatedObject.h"
 
 class MenuState :
@@ -8,7 +8,7 @@ class MenuState :
 {
 private:
 	/*All necessary variables here*/
-	OptionSelect optionSelect;
+	OptionSelectMM optionSelect;
 	sf::Sprite backgroundSprite;
 	sf::Texture backgroundTexture;
 	AnimatedObject torch, test;

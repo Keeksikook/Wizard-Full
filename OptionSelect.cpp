@@ -92,7 +92,7 @@ void OptionSelect::draw(sf::RenderTarget* window)
 	
 }
 
-void OptionSelect::setSize(sf::Vector2u position)
+void OptionSelect::setPos(sf::Vector2u position)
 {
 	this->position = position;
 }

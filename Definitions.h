@@ -4,11 +4,19 @@
 	_d => duration
 	_fc => frame count
 
+	_fi => fadein time
+
 */
+
+//Timings
+#define SplashScreenImage_d 2.f
+#define SplashScreenImage_fi 0.25f
 
 
 //Textures
 #define MainMenuBackground "Assets/Images/mainmenu.png"
+#define SplashScreenImage "Assets/Images/splashscreen.png"
+
 
 //Animations
 #define Torch "Assets/Animations/torch.png"
@@ -23,6 +31,7 @@
 //Fonts
 #define Khand "Assets/Fonts/khand.ttf"
 #define Arial "Assets/Fonts/arial.ttf"
+
 
 //Sound buffers
 

@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<iostream>
 #include"MenuState.h"
+#include"SplashScreenState.h"
 
 class Game
 {
