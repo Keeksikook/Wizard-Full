@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include <iostream>
 //#include "AnimatedObject.h" kui soovib animeerida splash screeni
 class SplashScreenState :
 	public State

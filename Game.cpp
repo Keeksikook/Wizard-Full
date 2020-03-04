@@ -36,6 +36,7 @@ void Game::initWin()
 	short frameRateLimit = 90;
 
 	this->window = new sf::RenderWindow(vidMode, title);
+	window->setKeyRepeatEnabled(false);
 	window->setFramerateLimit(frameRateLimit);
 	window->setVerticalSyncEnabled(vSyncOn);
 	//ifs.close();
@@ -49,6 +50,9 @@ Game::Game()
 	loadAssets();
 	initWin();
 	initStates();
+
+	//Restart clock to fix first deltaTime;
+	dtClock.restart();
 }
 
 Game::~Game()
@@ -87,7 +91,6 @@ void Game::update()
 {
 	if (!states.empty())
 	{
-		states.top()->update(dt);
 		if (states.top()->getQuit())
 		{
 			this->states.top()->endState();

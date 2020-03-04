@@ -3,7 +3,7 @@
 MenuState::MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager)
 	:
 	State(window, event, manager),
-	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}, this),
+	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}, this, *window),
 	torch({200, 200}, manager),
 	test({400, 200}, manager)
 	

@@ -26,6 +26,7 @@ private:
 
 	//Functions
 	void updateDt();
+	void pollEvent();
 
 
 public:

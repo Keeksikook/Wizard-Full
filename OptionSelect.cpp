@@ -36,9 +36,10 @@ void OptionSelect::decrement()
 	}
 }
 
-OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2u position)
+OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2u position, sf::RenderWindow& window)
 	:
-	position(position)
+	position(position),
+	window(window)
 {
 	//Non-Selected style
 	notSelected.setFont(font);
@@ -111,7 +112,7 @@ void OptionSelect::prev()
 	styleAfter();
 }
 
-void OptionSelect::update(sf::RenderWindow& window)
+bool OptionSelect::update(sf::RenderWindow& window)
 {
 	auto mousePos = sf::Mouse::getPosition(window);
 
@@ -121,6 +122,7 @@ void OptionSelect::update(sf::RenderWindow& window)
 		//If an option is under the cursor...
 		if (text.getGlobalBounds().contains(sf::Vector2f(mousePos)))
 		{
+
 			//Remove 'selected' style from currently selected item
 			styleBefore();
 
@@ -129,6 +131,9 @@ void OptionSelect::update(sf::RenderWindow& window)
 			
 			//Set 'selected' style on the currently selected item
 			styleAfter();
+
+			return true;
 		}
 	}
+	return false;
 }

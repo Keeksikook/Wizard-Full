@@ -22,6 +22,7 @@ void SplashScreenState::checkQuit()
 
 void SplashScreenState::endState()
 {
+	setting = Exiting;
 }
 
 void SplashScreenState::update(const float& dt)
@@ -30,12 +31,18 @@ void SplashScreenState::update(const float& dt)
 	{
 		updateInput(dt);
 		currentDuration += sf::seconds(dt);
-
+		std::cout << "duration: " << currentDuration.asSeconds() << "\n";
 		//TODO: Add updateable elements
 		if (currentDuration.asSeconds() < fadeIn.asSeconds())
+		{
 			image.setColor(sf::Color(255, 255, 255, 255 * currentDuration.asSeconds() / fadeIn.asSeconds()));
+		}
 		else
+		{
 			image.setColor(sf::Color(255, 255, 255, 255));
+			if (currentDuration.asSeconds() > wholeDuration.asSeconds())
+				this->endState();
+		}
 	}
 }
 

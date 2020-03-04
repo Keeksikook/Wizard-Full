@@ -9,8 +9,8 @@
 */
 
 //Timings
-#define SplashScreenImage_d 2.f
-#define SplashScreenImage_fi 0.25f
+#define SplashScreenImage_d 4.f
+#define SplashScreenImage_fi 1.5f
 
 
 //Textures
