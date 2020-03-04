@@ -72,10 +72,21 @@ void Game::updateDt()
 	dt = dtClock.restart().asSeconds();
 }
 
+void Game::pollEvent()
+{
+	while (window->pollEvent(SFEvent))
+	{
+		if (states.size() > 0)
+		{
+			states.top()->handleEvent(SFEvent);
+		}
+	}
+}
+
 void Game::initStates()
 {
-	states.push(new MenuState(window, SFEvent, manager));
-	states.push(new SplashScreenState(window, SFEvent, manager));
+	states.push(new MenuState(window, manager));
+	states.push(new SplashScreenState(window, manager));
 }
 
 void Game::loadAssets()
@@ -99,7 +110,6 @@ void Game::update()
 		}
 		else
 		{
-			states.top()->handleEvents();
 			states.top()->update(dt);
 		}
 	}
@@ -122,6 +132,7 @@ void Game::run()
 	while (window->isOpen())
 	{
 		updateDt();
+		pollEvent();
 		update();
 		draw();
 	}

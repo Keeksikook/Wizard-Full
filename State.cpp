@@ -2,9 +2,8 @@
 
 
 
-State::State(sf::RenderWindow* window, sf::Event& event, AssetManager& manager)
+State::State(sf::RenderWindow* window, AssetManager& manager)
 	:
-	event(event),
 	manager(manager)
 {
 	this->window = window;

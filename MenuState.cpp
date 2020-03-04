@@ -1,8 +1,8 @@
 #include "MenuState.h"
 
-MenuState::MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager)
+MenuState::MenuState(sf::RenderWindow* window, AssetManager& manager)
 	:
-	State(window, event, manager),
+	State(window, manager),
 	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}, this, *window),
 	torch({200, 200}, manager),
 	test({400, 200}, manager)
@@ -48,76 +48,76 @@ void MenuState::draw(sf::RenderTarget* target)
 	test.draw(target);
 }
 
-void MenuState::handleEvents()
+void MenuState::handleEvent(sf::Event& event)
 {
-	while (window->pollEvent(event))
+	switch (event.type)
 	{
-		switch (event.type)
-		{
-		case sf::Event::Closed:
-			window->close();
-			break;
-		case sf::Event::Resized:
-			//Fix view 
-			{ //This block is needed to avoid C2360
-				sf::FloatRect view(0, 0, event.size.width, event.size.height);
-				window->setView(sf::View(view));
-			}
-			break;
-		case sf::Event::MouseMoved:
-			optionSelect.update(*window);
-			break;
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::P)
-			{
-				togglePause();
-			}
-			if (event.key.code == sf::Keyboard::Pause)
-			{
-				togglePause();
-			}
-			if (event.key.code == sf::Keyboard::Enter)
-			{
-				optionSelect.select();
-			}
-			else if (event.key.code == sf::Keyboard::BackSpace)
-			{
-				setting = State::Exiting;
-			}
-			else if (event.key.code == sf::Keyboard::W)
-			{
-				optionSelect.prev();
-			}
-			else if (event.key.code == sf::Keyboard::S)
-			{
-				optionSelect.next();
-			}
-			else if (event.key.code == sf::Keyboard::A)
-			{
-				optionSelect.prev();
-			}
-			else if (event.key.code == sf::Keyboard::D)
-			{
-				optionSelect.next();
-			}
-			else if (event.key.code == sf::Keyboard::Up)
-			{
-				optionSelect.prev();
-			}
-			else if (event.key.code == sf::Keyboard::Down)
-			{
-				optionSelect.next();
-			}
-			else if (event.key.code == sf::Keyboard::Left)
-			{
-				optionSelect.prev();
-			}
-			else if (event.key.code == sf::Keyboard::Right)
-			{
-				optionSelect.next();
-			}
-			break;
+	case sf::Event::Closed:
+		window->close();
+		break;
+	case sf::Event::Resized:
+		//Fix view 
+		{ //This block is needed to avoid C2360
+			sf::FloatRect view(0, 0, event.size.width, event.size.height);
+			window->setView(sf::View(view));
 		}
+		break;
+	case sf::Event::MouseMoved:
+		optionSelect.update(*window);
+		break;
+	case sf::Event::MouseButtonPressed:
+		optionSelect.ifSelect();
+		break;
+	case sf::Event::KeyPressed:
+		if (event.key.code == sf::Keyboard::P)
+		{
+			togglePause();
+		}
+		if (event.key.code == sf::Keyboard::Pause)
+		{
+			togglePause();
+		}
+		if (event.key.code == sf::Keyboard::Enter)
+		{
+			optionSelect.select();
+		}
+		else if (event.key.code == sf::Keyboard::BackSpace)
+		{
+			setting = State::Exiting;
+		}
+		else if (event.key.code == sf::Keyboard::W)
+		{
+			optionSelect.prev();
+		}
+		else if (event.key.code == sf::Keyboard::S)
+		{
+			optionSelect.next();
+		}
+		else if (event.key.code == sf::Keyboard::A)
+		{
+			optionSelect.prev();
+		}
+		else if (event.key.code == sf::Keyboard::D)
+		{
+			optionSelect.next();
+		}
+		else if (event.key.code == sf::Keyboard::Up)
+		{
+			optionSelect.prev();
+		}
+		else if (event.key.code == sf::Keyboard::Down)
+		{
+			optionSelect.next();
+		}
+		else if (event.key.code == sf::Keyboard::Left)
+		{
+			optionSelect.prev();
+		}
+		else if (event.key.code == sf::Keyboard::Right)
+		{
+			optionSelect.next();
+		}
+		break;
 	}
 }
 

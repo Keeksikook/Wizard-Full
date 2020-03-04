@@ -12,7 +12,7 @@ protected:
 
 
 public:
-	SplashScreenState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager);
+	SplashScreenState(sf::RenderWindow* window, AssetManager& manager);
 	virtual ~SplashScreenState();
 
 	//Overrides
@@ -21,7 +21,7 @@ public:
 	void update(const float& dt) override;
 	void updateInput(const float& dt) override;
 	void draw(sf::RenderTarget* target = nullptr) override;
-	void handleEvents() override;
+	void handleEvent(sf::Event& event) override;
 
 };
 

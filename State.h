@@ -10,7 +10,6 @@ private:
 protected:
 
 	sf::RenderWindow* window;
-	sf::Event& event;
 	bool pausable = true;
 	AssetManager& manager;
 public:
@@ -19,7 +18,7 @@ public:
 	};
 	Situation setting = Running;
 
-	State(sf::RenderWindow* window, sf::Event& event, AssetManager& manager);
+	State(sf::RenderWindow* window, AssetManager& manager);
 	virtual ~State();
 
 	//Virtuals
@@ -28,7 +27,7 @@ public:
 	virtual void update(const float& dt) = 0;
 	virtual void updateInput(const float& dt) = 0;
 	virtual void draw(sf::RenderTarget* target = nullptr) = 0;
-	virtual void handleEvents() = 0;
+	virtual void handleEvent(sf::Event& event) = 0;
 
 
 	const bool getQuit() const;

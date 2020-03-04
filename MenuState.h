@@ -13,7 +13,7 @@ private:
 	sf::Texture backgroundTexture;
 	AnimatedObject torch, test;
 public:
-	MenuState(sf::RenderWindow* window, sf::Event& event, AssetManager& manager);
+	MenuState(sf::RenderWindow* window, AssetManager& manager);
 	virtual ~MenuState();
 
 	//Functions
@@ -21,5 +21,5 @@ public:
 	void updateInput(const float& dt) override;
 	void update(const float& dt) override;
 	void draw(sf::RenderTarget* target = nullptr) override;
-	virtual void handleEvents();
+	virtual void handleEvent(sf::Event& event);
 };
