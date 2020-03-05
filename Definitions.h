@@ -8,6 +8,10 @@
 
 */
 
+//Switches
+#define DEBUG true
+
+
 //Timings
 #define SplashScreenImage_d 4.f
 #define SplashScreenImage_fi 0.75f
@@ -16,6 +20,7 @@
 //Textures
 #define MainMenuBackground "Assets/Images/mainmenu.png"
 #define SplashScreenImage "Assets/Images/splashscreen.png"
+#define Grass "Assets/Images/grass.png"
 
 
 //Animations
@@ -26,6 +31,10 @@
 #define Test "Assets/Animations/test.png"
 #define Test_fc 6
 #define Test_d 6.f
+
+#define WizardIdle "Assets/Animations/wizardidle.png"
+#define WizardIdle_fc 4
+#define WizardIdle_d 3.f
 
 
 //Fonts

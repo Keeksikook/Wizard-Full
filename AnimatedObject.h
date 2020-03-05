@@ -10,7 +10,7 @@ private:
 	unsigned frameCount;
 	AssetManager& manager;
 
-	//As seconds
+	//One cycle duration as seconds
 	float duration;
 
 	void incrementFrame();
@@ -23,6 +23,10 @@ public:
 	void setAnimation(Animation& animation);
 
 	sf::Sprite& getSprite() { return sprite; }
+
+	//Update the object(to be overloaded)
 	virtual void update() { updateAnimation(); }
+
+
 	virtual void draw(sf::RenderTarget* target) { target->draw(sprite); }
 };

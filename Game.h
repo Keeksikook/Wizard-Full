@@ -4,6 +4,7 @@
 #include<iostream>
 #include"MenuState.h"
 #include"SplashScreenState.h"
+#include"GameState.h"
 
 class Game
 {

@@ -21,5 +21,7 @@ public:
 	void updateInput(const float& dt) override;
 	void update(const float& dt) override;
 	void draw(sf::RenderTarget* target = nullptr) override;
-	virtual void handleEvent(sf::Event& event);
+	int handleEvent(sf::Event& event) override;
+	std::string getType() override { return "MenuState"; }
+
 };

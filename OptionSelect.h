@@ -31,6 +31,6 @@ public:
 	void next();
 	void prev();
 	bool update(sf::RenderWindow& window);
-	virtual void select() = 0;
-	virtual void ifSelect() = 0; //Use to select by clicking
+	virtual unsigned select() = 0;
+	virtual unsigned ifSelect() = 0; //Use to select by clicking
 };

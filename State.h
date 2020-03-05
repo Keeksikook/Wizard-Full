@@ -27,7 +27,8 @@ public:
 	virtual void update(const float& dt) = 0;
 	virtual void updateInput(const float& dt) = 0;
 	virtual void draw(sf::RenderTarget* target = nullptr) = 0;
-	virtual void handleEvent(sf::Event& event) = 0;
+	virtual int handleEvent(sf::Event& event) = 0;
+	virtual std::string getType() { return "State"; }
 
 
 	const bool getQuit() const;

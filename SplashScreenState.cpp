@@ -7,6 +7,7 @@ SplashScreenState::SplashScreenState(sf::RenderWindow* window, AssetManager& man
 	wholeDuration(sf::seconds(SplashScreenImage_d)),
 	fadeIn(sf::seconds(SplashScreenImage_fi))
 {
+	pausable = false;
 	image.setTexture(manager.texture("SplashScreenImage"));
 	image.setColor(sf::Color(0, 0, 0, 0));
 }
@@ -31,7 +32,8 @@ void SplashScreenState::update(const float& dt)
 	{
 		updateInput(dt);
 		currentDuration += sf::seconds(dt);
-		std::cout << "duration: " << currentDuration.asSeconds() << "\n";
+		if(DEBUG)
+			std::cout << "duration: " << currentDuration.asSeconds() << "\n";
 		//TODO: Add updateable elements
 		if (currentDuration.asSeconds() < fadeIn.asSeconds())
 		{
@@ -60,7 +62,7 @@ void SplashScreenState::draw(sf::RenderTarget* target)
 	target->draw(image);
 }
 
-void SplashScreenState::handleEvent(sf::Event& event)
+int SplashScreenState::handleEvent(sf::Event& event)
 {
 	switch (event.type)
 	{
@@ -90,7 +92,7 @@ void SplashScreenState::handleEvent(sf::Event& event)
 		}
 		else if (event.key.code == sf::Keyboard::BackSpace)
 		{
-			setting = State::Exiting;
+			endState();
 		}
 		else if (event.key.code == sf::Keyboard::W)
 		{
@@ -118,4 +120,5 @@ void SplashScreenState::handleEvent(sf::Event& event)
 		}
 		break;
 	}
+	return -1;
 }

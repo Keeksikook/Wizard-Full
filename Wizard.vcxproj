@@ -153,6 +153,7 @@
     <ClCompile Include="AnimatedObject.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="OptionSelect.cpp" />
     <ClCompile Include="OptionSelectMM.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="OptionSelect.h" />
     <ClInclude Include="OptionSelectMM.h" />

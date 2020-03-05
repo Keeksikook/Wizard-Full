@@ -3,8 +3,8 @@
 
 struct Animation
 {
-	float duration;
+	float duration = 0;
 	sf::Texture texture;
-	unsigned frameCount;
+	unsigned frameCount = 0;
 };
 

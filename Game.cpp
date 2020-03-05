@@ -74,12 +74,41 @@ void Game::updateDt()
 
 void Game::pollEvent()
 {
+	int selection = -1;
+	State* gameState = nullptr;
 	while (window->pollEvent(SFEvent))
 	{
 		if (states.size() > 0)
 		{
-			states.top()->handleEvent(SFEvent);
+			selection = states.top()->handleEvent(SFEvent);
+			if (DEBUG && selection != 0)
+				std::cout << states.top()->getType() << ">" << selection << "\n";
+
+			//User selected 'New Game'
+			if (selection == 0)
+				gameState = new GameState(window, manager);
+
+			//User selected 'About'
+			else if (selection == 1)
+			{
+
+			}
+
+			//User selected 'Exit'
+			else if (selection == 2)
+			{
+				states.top()->endState();
+
+				//Break to outside of while
+				break;
+			}
 		}
+	}
+	if (gameState != nullptr)
+	{
+		states.push(gameState);
+		if(DEBUG)
+			std::cout << "Pushed new game!\n";
 	}
 }
 
@@ -95,7 +124,9 @@ void Game::loadAssets()
 	manager.loadFont("Khand", Khand);
 	manager.loadAnimation("Torch", Torch, Torch_d, Torch_fc);
 	manager.loadAnimation("Test", Test, Test_d, Test_fc);
+	manager.loadAnimation("WizardIdle", WizardIdle, WizardIdle_d, WizardIdle_fc);
 	manager.loadTexture("SplashScreenImage", SplashScreenImage);
+	manager.loadTexture("Grass", Grass);
 }
 
 void Game::update()

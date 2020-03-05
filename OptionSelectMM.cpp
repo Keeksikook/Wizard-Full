@@ -8,23 +8,27 @@ OptionSelectMM::OptionSelectMM(std::vector<std::string> options, sf::Font& font,
 {
 }
 
-void OptionSelectMM::select()
+unsigned OptionSelectMM::select()
 {
 	if (cursorPtr == &options[0]) { //New Game
-
+		return 0;
 	}
 	else if (cursorPtr == &options[1]) { //About
-
+		return 1;
 	}
 	else { //Exit
-		state->setting = State::Exiting;
+		return 2;
 	}
 }
 
-void OptionSelectMM::ifSelect()
+unsigned OptionSelectMM::ifSelect()
 {
 	//This is to be called, when the mouse is clicked.
 	//If the update selects an option, activate it.
+	//If dont select anything, return -1, otherwise return the option index
 	if (update(window))
-		select();
+	{
+		return select();
+	}
+	return -1;
 }
