@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "AssetManager.h"
 #include "Definitions.h"
+#include <iostream>
 
 class State
 {

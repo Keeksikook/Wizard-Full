@@ -1,14 +1,15 @@
 #pragma once
 #include "State.h"
-#include "AnimatedObject.h"
+#include "Player.h"
 class GameState :
 	public State
 {
 private:
-	AnimatedObject wizard;
+	Player wizard;
 	sf::Sprite background;
+	sf::View& playerView;
 public:
-	GameState(sf::RenderWindow* window, AssetManager& manager);
+	GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView);
 
 	//Virtuals
 	virtual void endState();

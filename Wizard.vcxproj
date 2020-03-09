@@ -155,8 +155,10 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="Mover.cpp" />
     <ClCompile Include="OptionSelect.cpp" />
     <ClCompile Include="OptionSelectMM.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SplashScreenState.cpp" />
     <ClCompile Include="State.cpp" />
@@ -169,8 +171,10 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="Mover.h" />
     <ClInclude Include="OptionSelect.h" />
     <ClInclude Include="OptionSelectMM.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SplashScreenState.h" />
     <ClInclude Include="State.h" />
   </ItemGroup>

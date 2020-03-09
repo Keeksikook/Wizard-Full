@@ -1,19 +1,24 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow* window, AssetManager& manager)
+
+GameState::GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView)
 	:
 	State(window, manager),
-	wizard(window->getView().getCenter(), manager)
+	wizard({ WorldSizeX * 0.5f, WorldSizeY * 0.5f }, manager, "WizardIdle"),
+	playerView(playerView)
 {
-	wizard.setAnimation(manager.animation("WizardIdle"));
-	wizard.getSprite().setScale(4, 4);
 	background.setTexture(manager.texture("Grass"));
+	sf::Vector2f backgroundScale(float(WorldSizeX) / 960.f, float(WorldSizeY) / 540.f);
+	background.setScale(backgroundScale);;
+	background.setPosition(0, 0);
+
 	pausable = true;
 }
 
 
 void GameState::endState()
 {
+	window->setView(window->getDefaultView());
 	setting = Exiting;
 }
 
@@ -22,7 +27,7 @@ void GameState::update(const float& dt)
 	if (setting == Running)
 	{
 		updateInput(dt);
-		wizard.update();
+		wizard.update(dt);
 	}
 }
 
@@ -33,6 +38,13 @@ void GameState::updateInput(const float& dt)
 
 void GameState::draw(sf::RenderTarget* target)
 {
+	if (D_COUT)
+	{
+		std::cout << "Origin: " << wizard.getSprite().getOrigin().x << " : " << wizard.getSprite().getOrigin().y << "\n";
+		std::cout << "pos: " << wizard.getSprite().getPosition().x << " : " << wizard.getSprite().getPosition().y << "\n";
+	}
+
+	target->setView(playerView);
 	target->draw(background);
 	wizard.draw(target);
 }
@@ -47,8 +59,8 @@ int GameState::handleEvent(sf::Event& event)
 	case sf::Event::Resized:
 		//Fix view 
 	{ //This block is needed to avoid C2360
-		sf::FloatRect view(0, 0, event.size.width, event.size.height);
-		window->setView(sf::View(view));
+		auto view = window->getView();
+		view.setSize(event.size.width, event.size.height);
 	}
 	break;
 	case sf::Event::MouseMoved:
@@ -66,6 +78,7 @@ int GameState::handleEvent(sf::Event& event)
 		}
 		if (event.key.code == sf::Keyboard::Enter)
 		{
+			std::cout << wizard.getInfo();
 		}
 		else if (event.key.code == sf::Keyboard::BackSpace)
 		{

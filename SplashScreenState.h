@@ -1,18 +1,21 @@
 #pragma once
-#include "State.h"
+#include "MenuState.h"
 #include <iostream>
-//#include "AnimatedObject.h" kui soovib animeerida splash screeni
+#include <wtypes.h>
+
 class SplashScreenState :
 	public State
 {
 private:
 	sf::Time wholeDuration, fadeIn, currentDuration;
 	sf::Sprite image;
+
+	MenuState* menuState;
 protected:
 
 
 public:
-	SplashScreenState(sf::RenderWindow* window, AssetManager& manager);
+	SplashScreenState(sf::RenderWindow* window, AssetManager& manager, MenuState* menuState);
 	virtual ~SplashScreenState();
 
 	//Overrides

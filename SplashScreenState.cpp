@@ -1,12 +1,15 @@
 #include "SplashScreenState.h"
 
-SplashScreenState::SplashScreenState(sf::RenderWindow* window, AssetManager& manager)
+
+
+SplashScreenState::SplashScreenState(sf::RenderWindow* window, AssetManager& manager, MenuState* menuState)
 	:
 	State(window, manager),
 	currentDuration(sf::Time::Zero),
 	wholeDuration(sf::seconds(SplashScreenImage_d)),
 	fadeIn(sf::seconds(SplashScreenImage_fi))
 {
+	this->menuState = menuState;
 	pausable = false;
 	image.setTexture(manager.texture("SplashScreenImage"));
 	image.setColor(sf::Color(0, 0, 0, 0));
@@ -23,6 +26,32 @@ void SplashScreenState::checkQuit()
 
 void SplashScreenState::endState()
 {
+#ifdef NDEBUG
+	//Go fullscreen
+	sf::ContextSettings contextSettings(0U, 0U, 8U, 1U, 1U, 0U, false);
+
+	//Find screen width/height
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	sf::VideoMode vMode(desktop.right, desktop.bottom);
+
+	//Recreate window fullscreen
+	window->create(vMode, Title, sf::Style::Fullscreen, contextSettings);
+	window->setKeyRepeatEnabled(true);
+	window->setVerticalSyncEnabled(true);
+#else
+	sf::ContextSettings contextSettings(0U, 0U, 8U, 1U, 1U, 0U, false);
+	sf::VideoMode vMode(960, 540);
+	window->create(vMode, Title, sf::Style::Titlebar | sf::Style::Close, contextSettings);
+	window->setKeyRepeatEnabled(true);
+	window->setVerticalSyncEnabled(true);
+#endif
+	menuState->resize();
+
+	//Exit state
 	setting = Exiting;
 }
 
@@ -32,7 +61,7 @@ void SplashScreenState::update(const float& dt)
 	{
 		updateInput(dt);
 		currentDuration += sf::seconds(dt);
-		if(DEBUG)
+		if(D_COUT)
 			std::cout << "duration: " << currentDuration.asSeconds() << "\n";
 		//TODO: Add updateable elements
 		if (currentDuration.asSeconds() < fadeIn.asSeconds())
@@ -70,11 +99,7 @@ int SplashScreenState::handleEvent(sf::Event& event)
 		window->close();
 		break;
 	case sf::Event::Resized:
-		//Fix view 
-	{ //This block is needed to avoid C2360
-		sf::FloatRect view(0, 0, event.size.width, event.size.height);
-		window->setView(sf::View(view));
-	}
+		perror("Resized during splashScreen!\n");
 	break;
 	case sf::Event::MouseMoved:
 		break;

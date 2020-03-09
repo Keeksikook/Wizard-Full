@@ -1,5 +1,7 @@
 #include "Game.h"
 
+
+
 //Static functions
 
 //Initializer functions
@@ -30,15 +32,12 @@ void Game::initWin()
 	}
 	*/
 
-	std::string title("Wizardry!");
-	sf::VideoMode vidMode(960, 540);
 	bool vSyncOn = 1;
 	short frameRateLimit = 90;
+	sf::VideoMode vMode(WindowWidth, WindowHeight);
 
-	this->window = new sf::RenderWindow(vidMode, title);
-	window->setKeyRepeatEnabled(false);
-	window->setFramerateLimit(frameRateLimit);
-	window->setVerticalSyncEnabled(vSyncOn);
+	this->window = new sf::RenderWindow(vMode, Title, sf::Style::None);
+	window->setVerticalSyncEnabled(true);
 	//ifs.close();
 	
 }
@@ -50,6 +49,9 @@ Game::Game()
 	loadAssets();
 	initWin();
 	initStates();
+
+	playerView.setSize(WorldSizeX, WorldSizeY);
+	playerView.setCenter(WorldSizeX / 2.f, WorldSizeY / 2.f);
 
 	//Restart clock to fix first deltaTime;
 	dtClock.restart();
@@ -81,12 +83,10 @@ void Game::pollEvent()
 		if (states.size() > 0)
 		{
 			selection = states.top()->handleEvent(SFEvent);
-			if (DEBUG && selection != 0)
-				std::cout << states.top()->getType() << ">" << selection << "\n";
 
 			//User selected 'New Game'
 			if (selection == 0)
-				gameState = new GameState(window, manager);
+				gameState = new GameState(window, manager, playerView);
 
 			//User selected 'About'
 			else if (selection == 1)
@@ -107,7 +107,7 @@ void Game::pollEvent()
 	if (gameState != nullptr)
 	{
 		states.push(gameState);
-		if(DEBUG)
+		if(D_COUT)
 			std::cout << "Pushed new game!\n";
 	}
 }
@@ -115,7 +115,7 @@ void Game::pollEvent()
 void Game::initStates()
 {
 	states.push(new MenuState(window, manager));
-	states.push(new SplashScreenState(window, manager));
+	states.push(new SplashScreenState(window, manager, (MenuState*)states.top()));
 }
 
 void Game::loadAssets()
@@ -134,7 +134,8 @@ void Game::update()
 	if (!states.empty())
 	{
 		if (states.top()->getQuit())
-		{
+		{				
+
 			this->states.top()->endState();
 			delete this->states.top();
 			this->states.pop();

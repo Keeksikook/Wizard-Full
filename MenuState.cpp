@@ -1,18 +1,28 @@
 #include "MenuState.h"
 
+
+
 MenuState::MenuState(sf::RenderWindow* window, AssetManager& manager)
 	:
 	State(window, manager),
-	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {480,260}, this, *window),
-	torch({200, 200}, manager),
-	test({400, 200}, manager)
+	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {0.5, 0.5}, this, *window),
+	torch({0, 100}, manager, "Torch"),
+	test({ 100 , 100 }, manager, "Test")
 	
 {
 	pausable = false;
+
 	backgroundSprite.setTexture(manager.texture("MainMenuBackground"));
-	backgroundSprite.setScale(960.f / 1024.f, 540.f / 1024.f);
-	torch.setAnimation(manager.animation("Torch"));
-	test.setAnimation(manager.animation("Test"));
+
+	if (D_COUT && 0)
+	{
+		std::cout << "<MenuState>\n";
+		std::cout << "View center: " << window->getView().getCenter().x << "><" << window->getView().getCenter().y << "\n";
+		std::cout << "View Size: " << window->getView().getSize().x << "><" << window->getView().getSize().y << "\n";
+		std::cout << "World size: " << WorldSizeX << "><" << WorldSizeY << "\n";
+		std::cout << "background size: " << backgroundSprite.getTexture()->getSize().x * backgroundSprite.getScale().x << "><" << backgroundSprite.getTexture()->getSize().y * backgroundSprite.getScale().y << "\n";
+		std::cout << "torch: " << torch.getSprite().getTextureRect().width * torch.getSprite().getScale().x << "><" << torch.getSprite().getTextureRect().height * torch.getSprite().getScale().y << "\n";
+	}
 }
 
 MenuState::~MenuState()
@@ -32,6 +42,7 @@ void MenuState::updateInput(const float& dt)
 
 void MenuState::update(const float& dt)
 {
+	optionSelect.reSize();
 	if (setting == Running)
 	{
 		updateInput(dt);
@@ -44,6 +55,9 @@ void MenuState::draw(sf::RenderTarget* target)
 {
 	if (!target)
 		target = window;
+
+	window->setView(window->getDefaultView());
+
 	target->draw(backgroundSprite);
 	optionSelect.draw(target);
 	torch.draw(target);
@@ -66,11 +80,7 @@ int MenuState::handleEvent(sf::Event& event)
 		window->close();
 		break;
 	case sf::Event::Resized:
-		//Fix view 
-		{ //This block is needed to avoid C2360
-			sf::FloatRect view(0, 0, event.size.width, event.size.height);
-			window->setView(sf::View(view));
-		}
+		optionSelect.reSize();
 		break;
 	case sf::Event::MouseMoved:
 		optionSelect.update(*window);
@@ -169,5 +179,11 @@ int MenuState::handleEvent(sf::Event& event)
 	}
 	}
 	return selectionNr;
+}
+
+void MenuState::resize()
+{
+	auto view = window->getDefaultView().getSize();
+	backgroundSprite.setScale(view.x / 1024.f, view.y / 1024.f);
 }
 

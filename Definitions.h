@@ -8,8 +8,24 @@
 
 */
 
+//Code snippets
+#define PrintView std::cout << "[" << window->getView().getSize().x << " : " << window->getView().getSize().y << "]\n";
+#define PrintVector2f std::cout << "[" << v.x << " : " << v.y << "]\n";
+
+
+//GameSettings
+#define Title "Wizardry!"
+#define WorldSizeX 16*20 //320
+#define WorldSizeY 9*20 //180
+#define WindowWidth 960
+#define WindowHeight 540
+#define PlayerSpeed 3.f
+#define PlayerAccel 8.f
+#define PlayerDecel 12.f
+#define AntiSlip true
+
 //Switches
-#define DEBUG true
+#define D_COUT false //Cout debugging messages
 
 
 //Timings

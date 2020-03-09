@@ -2,12 +2,12 @@
 #include<SFML/Graphics.hpp>
 #include<vector>
 #include<iostream>
+#include"Definitions.h"
 
 class OptionSelect
 {
 private:
-	sf::Vector2u position;
-	unsigned optionHeight;
+	sf::Vector2f position;
 
 
 	//MODEL
@@ -24,10 +24,11 @@ protected:
 	void increment();
 	void decrement();
 public:
-	OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2u position, sf::RenderWindow& window);
+	OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2f position, sf::RenderWindow& window);
 
+	void reSize();
 	void draw(sf::RenderTarget* window);
-	void setPos(sf::Vector2u position);
+	void setPos(sf::Vector2f position);
 	void next();
 	void prev();
 	bool update(sf::RenderWindow& window);

@@ -18,6 +18,8 @@ private:
 	float dt = 0;
 	std::stack<State*> states;
 	AssetManager manager;
+	sf::View playerView;
+
 
 	//Initialization
 

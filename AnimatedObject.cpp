@@ -46,11 +46,28 @@ void AnimatedObject::setAnimation(Animation& animation)
 	c_fromLastSwitch.restart();
 }
 
-AnimatedObject::AnimatedObject(sf::Vector2f position, AssetManager& manager)
+void AnimatedObject::centerOrigin()
+{
+	sf::Vector2f frameSize(sprite.getTextureRect().width / 2.f, sprite.getTextureRect().height / 2.f);
+
+	sprite.setOrigin(frameSize);
+}
+
+AnimatedObject::AnimatedObject(sf::Vector2f cornerPosition, AssetManager& manager)
 	:
 	manager(manager),
 	duration(1),
 	frameCount(1)
 {
-	sprite.setPosition(position);
+	sprite.setPosition(cornerPosition);
+}
+
+AnimatedObject::AnimatedObject(sf::Vector2f position, AssetManager& manager, std::string animationName)
+	:
+	manager(manager)
+{
+	this->setAnimation(manager.animation(animationName));
+	sf::Vector2f origin(this->sprite.getTextureRect().width / 2.f, this->sprite.getTextureRect().height / 2.f);
+	this->sprite.setOrigin(origin);
+	this->sprite.setPosition(position);
 }

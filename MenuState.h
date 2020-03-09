@@ -10,7 +10,6 @@ private:
 	/*All necessary variables here*/
 	OptionSelectMM optionSelect;
 	sf::Sprite backgroundSprite;
-	sf::Texture backgroundTexture;
 	AnimatedObject torch, test;
 public:
 	MenuState(sf::RenderWindow* window, AssetManager& manager);
@@ -22,6 +21,8 @@ public:
 	void update(const float& dt) override;
 	void draw(sf::RenderTarget* target = nullptr) override;
 	int handleEvent(sf::Event& event) override;
+
 	std::string getType() override { return "MenuState"; }
+	void resize();
 
 };

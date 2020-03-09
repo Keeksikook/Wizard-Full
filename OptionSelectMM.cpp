@@ -1,7 +1,7 @@
 #include "OptionSelectMM.h"
 
 
-OptionSelectMM::OptionSelectMM(std::vector<std::string> options, sf::Font& font, sf::Vector2u position, State* state, sf::RenderWindow& window)
+OptionSelectMM::OptionSelectMM(std::vector<std::string> options, sf::Font& font, sf::Vector2f position, State* state, sf::RenderWindow& window)
 	:
 	OptionSelect(options, font, position, window),
 	state(state)

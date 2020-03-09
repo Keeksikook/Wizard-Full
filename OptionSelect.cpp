@@ -36,7 +36,7 @@ void OptionSelect::decrement()
 	}
 }
 
-OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2u position, sf::RenderWindow& window)
+OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf::Vector2f position, sf::RenderWindow& window)
 	:
 	position(position),
 	window(window)
@@ -50,9 +50,6 @@ OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf:
 	notSelected.setString("#NOTSELECTED#");
 	////
 
-	//Find the height of an option using the non-selected text
-	optionHeight = notSelected.getGlobalBounds().height;
-
 	//Selected style
 	selected.setFont(font);
 	selected.setFillColor(sf::Color::Yellow);
@@ -64,12 +61,9 @@ OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf:
 
 	//Format & position every option
 	for (auto& txt : options) {
-		static unsigned n = 0;
 		this->options.push_back(notSelected);
 		this->options.back().setFont(font);
 		this->options.back().setString(txt);
-		this->options.back().setPosition(position.x - this->options.back().getGlobalBounds().width / 2, position.y + optionHeight * n);
-		n++;
 	}
 	////
 
@@ -82,18 +76,41 @@ OptionSelect::OptionSelect(std::vector<std::string> options, sf::Font& font, sf:
 
 	//Select the first option
 	cursorPtr = &this->options[0];
+
+	//Set the positions using resize()
+	reSize();
+}
+
+void OptionSelect::reSize()
+{
+	float actual_windowWidth = window.getDefaultView().getSize().x;
+	float actual_windowHeight = window.getDefaultView().getSize().y;
+
+	//Set the character size to fit the window size
+	float factor = actual_windowWidth / WindowWidth;
+	notSelected.setCharacterSize(factor * 30);
+	selected.setCharacterSize(factor * 30);
+	float optionHeight = selected.getLocalBounds().height;
+
+	unsigned n = 0;
+	for (auto& opt : options)
+	{
+		opt.setCharacterSize(factor * 30);
+		auto halfWidth = this->options.back().getGlobalBounds().width;
+		sf::Vector2f pos(position.x * actual_windowWidth - opt.getGlobalBounds().width / 2, position.y * actual_windowHeight + optionHeight * n);
+		opt.setPosition(pos);
+		n++;
+	}
 }
 
 void OptionSelect::draw(sf::RenderTarget* window)
 {
-	unsigned n = 0;
 	for (auto& text : options) {
 		window->draw(text);
 	}
-	
 }
 
-void OptionSelect::setPos(sf::Vector2u position)
+void OptionSelect::setPos(sf::Vector2f position)
 {
 	this->position = position;
 }
