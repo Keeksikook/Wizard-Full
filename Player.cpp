@@ -9,28 +9,11 @@ Player::Player(sf::Vector2f position, AssetManager& manager, std::string animati
 void Player::update(float dt)
 {
 	LookDirection oldDir = lookDirection;
-	sf::Vector2f oldPos = getSprite().getPosition();
-
-
-	//find if moving
-	bool moving = false;
-	if (
-		(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) ||
-		(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ||
-		(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S)) ||
-		(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		)
-	{
-		moving = true;
-	}
-		
+	sf::Vector2f oldPos = getSprite().getPosition();		
 
 	//Decelerate the player if not trying to move
-	if(!moving)
-	{
-		sf::Vector2f negativeSpeed(-speed.x, -speed.y);
-		speed += negativeSpeed * dt * PlayerDecel;
-	}
+	sf::Vector2f negativeSpeed(-speed.x, -speed.y);
+	speed += negativeSpeed * dt * PlayerDecel;
 
 	//If player speed is low, set to 0
 	float speed_lenght = sqrtf(speed.x * speed.x + speed.y * speed.y);
@@ -85,8 +68,21 @@ void Player::update(float dt)
 	if (lookDirection != oldDir)
 		flipSpriteHorizontal();	
 
-	updateAnimation();
+	updateAnimation(getSprite().getPosition() - oldPos);
 }
+
+void Player::setAnimation(Animation& animation)
+{
+	//Put the animation in pointer, to know which one we're using, then update the sprite's animation
+	this->animation = &animation;
+	AnimatedObject::setAnimation(animation);
+}
+
+void Player::updateAnimation(sf::Vector2f movement)
+{
+	
+}
+
 
 std::string Player::getInfo()
 {

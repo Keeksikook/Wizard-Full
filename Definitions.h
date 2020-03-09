@@ -20,7 +20,7 @@
 #define WindowWidth 960
 #define WindowHeight 540
 #define PlayerSpeed 3.f
-#define PlayerAccel 8.f
+#define PlayerAccel 40.f
 #define PlayerDecel 12.f
 #define AntiSlip true
 

@@ -21,7 +21,7 @@ public:
 	AnimatedObject(sf::Vector2f position, AssetManager& manager, std::string animationName);
 
 	void setAnimation(sf::Texture& texture, unsigned frameCount, float duration);
-	void setAnimation(Animation& animation);
+	virtual void setAnimation(Animation& animation);
 
 	sf::Sprite& getSprite() { return sprite; }
 	void centerOrigin();
