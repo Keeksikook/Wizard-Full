@@ -8,13 +8,13 @@ private:
 	sf::Clock c_fromLastSwitch;
 	sf::Sprite sprite;
 	unsigned frameCount;
-	AssetManager& manager;
 
 	//One cycle duration as seconds
 	float duration;
 
 	void incrementFrame();
 protected:
+	AssetManager& manager;
 	void updateAnimation();
 public:
 	AnimatedObject(sf::Vector2f cornerPosition, AssetManager& manager);

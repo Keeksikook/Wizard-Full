@@ -125,6 +125,8 @@ void Game::loadAssets()
 	manager.loadAnimation("Torch", Torch, Torch_d, Torch_fc);
 	manager.loadAnimation("Test", Test, Test_d, Test_fc);
 	manager.loadAnimation("WizardIdle", WizardIdle, WizardIdle_d, WizardIdle_fc);
+	manager.loadAnimation("WizardRight", WizardRight, WizardRight_d, WizardRight_fc);
+	manager.loadAnimation("WizardLeft", WizardLeft, WizardLeft_d, WizardLeft_fc);
 	manager.loadTexture("SplashScreenImage", SplashScreenImage);
 	manager.loadTexture("Grass", Grass);
 }

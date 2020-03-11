@@ -21,7 +21,7 @@
 #define WindowHeight 540
 #define PlayerSpeed 3.f
 #define PlayerAccel 40.f
-#define PlayerDecel 12.f
+#define PlayerDecel 8.f
 #define AntiSlip true
 
 //Switches
@@ -50,8 +50,15 @@
 
 #define WizardIdle "Assets/Animations/wizardidle.png"
 #define WizardIdle_fc 4
-#define WizardIdle_d 3.f
+#define WizardIdle_d .9f
 
+#define WizardRight "Assets/Animations/wizard-right.png"
+#define WizardRight_fc 4
+#define WizardRight_d .7f
+
+#define WizardLeft "Assets/Animations/wizard-left.png"
+#define WizardLeft_fc 4
+#define WizardLeft_d .7f
 
 //Fonts
 #define Khand "Assets/Fonts/khand.ttf"

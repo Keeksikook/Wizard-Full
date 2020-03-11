@@ -8,44 +8,38 @@ Player::Player(sf::Vector2f position, AssetManager& manager, std::string animati
 
 void Player::update(float dt)
 {
-	LookDirection oldDir = lookDirection;
-	sf::Vector2f oldPos = getSprite().getPosition();		
+	sf::Vector2f oldPos = getSprite().getPosition();
+
+	//Accelerate if key is pressed
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		applyFriction(false, dt);
+		speed += sf::Vector2f(-PlayerAccel * dt, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		applyFriction(false, dt);
+		speed += sf::Vector2f(PlayerAccel * dt, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		applyFriction(true, dt);
+		speed += sf::Vector2f(0, -PlayerAccel * dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		applyFriction(true, dt);
+		speed += sf::Vector2f(0, PlayerAccel * dt);
+	}
 
 	//Decelerate the player if not trying to move
-	sf::Vector2f negativeSpeed(-speed.x, -speed.y);
-	speed += negativeSpeed * dt * PlayerDecel;
+	applyFriction(true, dt);
+	applyFriction(false, dt);
 
 	//If player speed is low, set to 0
 	float speed_lenght = sqrtf(speed.x * speed.x + speed.y * speed.y);
 	if (speed_lenght < 0.01f)
 		speed = { 0, 0 };
-	
-
-	//Accelerate if key is pressed
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		if(speed.x > 0 && AntiSlip)
-			speed.x *= dt;
-		speed += sf::Vector2f(-PlayerAccel * dt, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		if (speed.x < 0 && AntiSlip)
-			speed.x *= dt;
-		speed += sf::Vector2f(PlayerAccel * dt, 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		if (speed.y > 0 && AntiSlip)
-			speed.y *= dt;
-		speed += sf::Vector2f(0, -PlayerAccel * dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		if (speed.y < 0 && AntiSlip)
-			speed.y *= dt;
-		speed += sf::Vector2f(0, PlayerAccel * dt);
-	}
 
 	//Clamp speed
 	speed_lenght = sqrtf(speed.x * speed.x + speed.y * speed.y);
@@ -56,31 +50,58 @@ void Player::update(float dt)
 	}
 
 	getSprite().move(speed);
-	if ((getSprite().getPosition() - oldPos).x > 0)
-		lookDirection = LookDirection::Right;
-	else if ((getSprite().getPosition() - oldPos).x == 0)
-	{
-	}
-	else
-		lookDirection = LookDirection::Left;
+	sf::Vector2f movement = getSprite().getPosition() - oldPos;
 
-	//Flip sprite if needed
-	if (lookDirection != oldDir)
-		flipSpriteHorizontal();	
+	//if (movement.x > 0)
+	//	lookDirection = LookDirection::Right;
+	//else if (movement.x == 0)
+	//{
+	//}
+	//else
+	//	lookDirection = LookDirection::Left;
 
-	updateAnimation(getSprite().getPosition() - oldPos);
+	updateAnimationType(movement);
+	updateAnimation();
 }
 
 void Player::setAnimation(Animation& animation)
 {
-	//Put the animation in pointer, to know which one we're using, then update the sprite's animation
 	this->animation = &animation;
 	AnimatedObject::setAnimation(animation);
 }
 
-void Player::updateAnimation(sf::Vector2f movement)
+//if needed, set animation; return true if needed
+bool Player::ifSetAnimation(Animation& animation)
 {
-	
+	if (this->animation == &animation)
+		return false;
+	setAnimation(animation);
+	return true;
+}
+
+void Player::applyFriction(bool horizontal, float dt)
+{
+	if (horizontal)
+	{
+		sf::Vector2f horizontalSpeed = { speed.x, 0 };
+		speed -= horizontalSpeed * dt * PlayerDecel;
+	}
+	else
+	{
+		sf::Vector2f verticalSpeed = { 0, speed.y };
+		speed -= verticalSpeed * dt * PlayerDecel;
+	}
+}
+
+void Player::updateAnimationType(sf::Vector2f movement)
+{
+	if (movement.x > 0)
+		ifSetAnimation(manager.animation("WizardRight"));
+	else if (movement.x < 0)
+		ifSetAnimation(manager.animation("WizardLeft"));
+	else
+	{
+	}
 }
 
 
