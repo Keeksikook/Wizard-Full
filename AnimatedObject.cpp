@@ -25,6 +25,7 @@ void AnimatedObject::setAnimation(Animation& animation)
 	sprite.setTexture(animation.texture);
 	this->frameCount = animation.frameCount;
 	this->duration = animation.duration;
+	this->progress = 0;
 
 	//Set subrect
 	setRect();
