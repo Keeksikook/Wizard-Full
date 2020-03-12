@@ -61,7 +61,7 @@ void Player::update(float dt)
 	//	lookDirection = LookDirection::Left;
 
 	updateAnimationType(movement);
-	updateAnimation();
+	updateAnimation(dt);
 }
 
 void Player::setAnimation(Animation& animation)
@@ -101,6 +101,7 @@ void Player::updateAnimationType(sf::Vector2f movement)
 		ifSetAnimation(manager.animation("WizardLeft"));
 	else
 	{
+		ifSetAnimation(manager.animation("WizardIdle"));
 	}
 }
 

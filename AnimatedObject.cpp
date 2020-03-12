@@ -1,37 +1,23 @@
 #include "AnimatedObject.h"
 
-void AnimatedObject::incrementFrame()
+void AnimatedObject::setRect()
 {
 	//Variables
-	const sf::Texture& texture = *sprite.getTexture();
-	const int frameWidth = texture.getSize().x / frameCount;
-	int currentIndex = sprite.getTextureRect().left / frameWidth;
-	int maxIndex = sprite.getTexture()->getSize().x / frameWidth;
-	//>>
-	if(currentIndex < maxIndex - 1)
-		sprite.setTextureRect(sf::IntRect((currentIndex + 1) * frameWidth, 0, frameWidth, sprite.getTextureRect().height));
-	else
-		sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, sprite.getTextureRect().height));
+	const int frameWidth = sprite.getTexture()->getSize().x / frameCount;
+	float frameTime = frameCount / duration;
+
+	float percentage = progress / duration;
+	unsigned short index = floorf(percentage * frameCount);
+
+
+	sprite.setTextureRect(sf::IntRect(index * frameWidth, 0, frameWidth, sprite.getTexture()->getSize().y));
 }
 
-void AnimatedObject::updateAnimation()
+void AnimatedObject::updateAnimation(float dt)
 {
-	if (c_fromLastSwitch.getElapsedTime().asSeconds() >= duration/float(frameCount)) {
-		c_fromLastSwitch.restart();
-		incrementFrame();
-	}
-}
-
-void AnimatedObject::setAnimation(sf::Texture& texture, unsigned frameCount, float duration)
-{
-	sprite.setTexture(texture);
-	this->frameCount = frameCount;
-	this->duration = duration;
-
-	//Set subrect
-	sprite.setTextureRect(sf::IntRect(0, 0, texture.getSize().x / frameCount, texture.getSize().y));
-	//Reset clock
-	c_fromLastSwitch.restart();
+	//Progress = (progress + dt) % duration
+	progress = fmod(progress + dt, duration);
+	setRect();	
 }
 
 void AnimatedObject::setAnimation(Animation& animation)
@@ -41,9 +27,13 @@ void AnimatedObject::setAnimation(Animation& animation)
 	this->duration = animation.duration;
 
 	//Set subrect
-	sprite.setTextureRect(sf::IntRect(0, 0, animation.texture.getSize().x / frameCount, animation.texture.getSize().y));
-	//Reset clock
-	c_fromLastSwitch.restart();
+	setRect();
+}
+
+void AnimatedObject::setAnimation(Animation& animation, float progress)
+{
+	setAnimation(animation);
+	this->progress = progress;
 }
 
 void AnimatedObject::centerOrigin()
@@ -70,4 +60,11 @@ AnimatedObject::AnimatedObject(sf::Vector2f position, AssetManager& manager, std
 	sf::Vector2f origin(this->sprite.getTextureRect().width / 2.f, this->sprite.getTextureRect().height / 2.f);
 	this->sprite.setOrigin(origin);
 	this->sprite.setPosition(position);
+}
+
+AnimatedObject::AnimatedObject(sf::Vector2f position, AssetManager& manager, std::string animationName, float progress)
+	:
+	AnimatedObject(position, manager, animationName)
+{
+	this->progress = progress;
 }

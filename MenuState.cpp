@@ -6,7 +6,7 @@ MenuState::MenuState(sf::RenderWindow* window, AssetManager& manager)
 	:
 	State(window, manager),
 	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {0.5, 0.5}, this, *window),
-	torch({0, 100}, manager, "Torch"),
+	torch({40, 100}, manager, "Torch"),
 	test({ 100 , 100 }, manager, "Test")
 	
 {
@@ -14,14 +14,9 @@ MenuState::MenuState(sf::RenderWindow* window, AssetManager& manager)
 
 	backgroundSprite.setTexture(manager.texture("MainMenuBackground"));
 
-	if (D_COUT && 0)
+	if (D_COUT)
 	{
-		std::cout << "<MenuState>\n";
-		std::cout << "View center: " << window->getView().getCenter().x << "><" << window->getView().getCenter().y << "\n";
-		std::cout << "View Size: " << window->getView().getSize().x << "><" << window->getView().getSize().y << "\n";
-		std::cout << "World size: " << WorldSizeX << "><" << WorldSizeY << "\n";
-		std::cout << "background size: " << backgroundSprite.getTexture()->getSize().x * backgroundSprite.getScale().x << "><" << backgroundSprite.getTexture()->getSize().y * backgroundSprite.getScale().y << "\n";
-		std::cout << "torch: " << torch.getSprite().getTextureRect().width * torch.getSprite().getScale().x << "><" << torch.getSprite().getTextureRect().height * torch.getSprite().getScale().y << "\n";
+		
 	}
 }
 
@@ -46,8 +41,8 @@ void MenuState::update(const float& dt)
 	if (setting == Running)
 	{
 		updateInput(dt);
-		torch.update();
-		test.update();
+		torch.update(dt);
+		test.update(dt);
 	}
 }
 
