@@ -5,14 +5,14 @@
 MenuState::MenuState(sf::RenderWindow* window, AssetManager& manager)
 	:
 	State(window, manager),
-	optionSelect({ "New Game", "About", "Exit" }, manager.font("Khand"), {0.5, 0.5}, this, *window),
-	torch({40, 100}, manager, "Torch"),
-	test({ 100 , 100 }, manager, "Test")
+	optionSelect({ "New Game", "About", "Exit" }, manager.font(Khand), {0.5, 0.5}, this, *window),
+	torch({40, 100}, manager, Torch),
+	test({ 100 , 100 }, manager, Test)
 	
 {
 	pausable = false;
 
-	backgroundSprite.setTexture(manager.texture("MainMenuBackground"));
+	backgroundSprite.setTexture(manager.texture(MainMenuBackground));
 
 	if (D_COUT)
 	{

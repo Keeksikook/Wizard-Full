@@ -120,15 +120,20 @@ void Game::initStates()
 
 void Game::loadAssets()
 {
-	manager.loadTexture("MainMenuBackground", MainMenuBackground);
-	manager.loadFont("Khand", Khand);
-	manager.loadAnimation("Torch", Torch, Torch_d, Torch_fc);
-	manager.loadAnimation("Test", Test, Test_d, Test_fc);
-	manager.loadAnimation("WizardIdle", WizardIdle, WizardIdle_d, WizardIdle_fc);
-	manager.loadAnimation("WizardRight", WizardRight, WizardRight_d, WizardRight_fc);
-	manager.loadAnimation("WizardLeft", WizardLeft, WizardLeft_d, WizardLeft_fc);
-	manager.loadTexture("SplashScreenImage", SplashScreenImage);
-	manager.loadTexture("Grass", Grass);
+	manager.loadTexture(MainMenuBackground);
+	manager.loadFont(Khand);
+	manager.loadAnimation(Torch, Torch_d, Torch_fc);
+	manager.loadAnimation(Test, Test_d, Test_fc);
+	manager.loadAnimation(WizardIdle, WizardIdle_d, WizardIdle_fc);
+	manager.loadAnimation(WizardRight, WizardRight_d, WizardRight_fc);
+	manager.loadAnimation(WizardLeft, WizardLeft_d, WizardLeft_fc);
+	manager.loadAnimation(ExploderIdle, ExploderIdle_d, ExploderIdle_fc);
+	manager.loadAnimation(ExploderMove, ExploderMove_d, ExploderMove_fc);
+	manager.loadAnimation(ExploderCharging, ExploderCharging_d, ExploderCharging_fc);
+	manager.loadAnimation(ExploderDeath, ExploderDeath_d, ExploderDeath_fc);
+	manager.loadAnimation(ExploderExplosion, Explosion_d, Explosion_fc);
+	manager.loadTexture(SplashScreenImage);
+	manager.loadTexture(Grass);
 }
 
 void Game::update()

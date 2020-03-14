@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimatedObject.h"
+#include "Definitions.h"
 class Mover :
 	public AnimatedObject
 {
@@ -10,12 +11,12 @@ protected:
 	};
 
 	LookDirection lookDirection = LookDirection::Right;
-
+	void clampToWorld();
 	void flipSpriteHorizontal();
 public:
 	Mover(sf::Vector2f position, AssetManager& manager, std::string animationName);
 
-	virtual void update(float dt) = 0;
+	virtual bool update(float dt) = 0;
 	virtual void draw(sf::RenderTarget* target) = 0;
 };
 

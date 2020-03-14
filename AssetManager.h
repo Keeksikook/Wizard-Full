@@ -19,21 +19,21 @@ public:
 	sf::SoundBuffer& buffer(std::string name) { return soundBuffers[name]; }
 	Animation& animation(std::string name) { return animations[name]; }
 	
-	void loadTexture(std::string name, std::string filePath) {
-		textures[name] = sf::Texture();
-		textures[name].loadFromFile(filePath);
+	void loadTexture( std::string filePath) {
+		textures[filePath] = sf::Texture();
+		textures[filePath].loadFromFile(filePath);
 	}
-	void loadFont(std::string name, std::string filePath) {
-		fonts[name] = sf::Font();
-		fonts[name].loadFromFile(filePath);
+	void loadFont(std::string filePath) {
+		fonts[filePath] = sf::Font();
+		fonts[filePath].loadFromFile(filePath);
 	}
-	void loadBuffer(std::string name, std::string filePath) {
-		soundBuffers[name] = sf::SoundBuffer();
-		soundBuffers[name].loadFromFile(filePath);
+	void loadBuffer( std::string filePath) {
+		soundBuffers[filePath] = sf::SoundBuffer();
+		soundBuffers[filePath].loadFromFile(filePath);
 	}
-	void loadAnimation(std::string name, std::string filePath, float duration, unsigned frameCount) {
-		animations[name] = { duration, sf::Texture(), frameCount };
-		animations[name].texture.loadFromFile(filePath);
+	void loadAnimation(std::string filePath, float duration, unsigned frameCount) {
+		animations[filePath] = { duration, sf::Texture(), frameCount };
+		animations[filePath].texture.loadFromFile(filePath);
 	}
 };
 

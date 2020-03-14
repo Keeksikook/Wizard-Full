@@ -12,9 +12,9 @@ private:
 	float duration;
 
 	void setRect();
+	void updateAnimation(float dt);
 protected:
 	AssetManager& manager;
-	void updateAnimation(float dt);
 public:
 	float progress = 0;
 	AnimatedObject(sf::Vector2f cornerPosition, AssetManager& manager);
@@ -28,7 +28,7 @@ public:
 	void centerOrigin();
 
 	//Update the object(to be overloaded)
-	virtual void update(float dt) { updateAnimation(dt); }
+	virtual bool update(float dt) { updateAnimation(dt); return false; }
 
 
 	virtual void draw(sf::RenderTarget* target) { target->draw(sprite); }

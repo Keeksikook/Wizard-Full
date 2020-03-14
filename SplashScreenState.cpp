@@ -11,7 +11,7 @@ SplashScreenState::SplashScreenState(sf::RenderWindow* window, AssetManager& man
 {
 	this->menuState = menuState;
 	pausable = false;
-	image.setTexture(manager.texture("SplashScreenImage"));
+	image.setTexture(manager.texture(SplashScreenImage));
 	image.setColor(sf::Color(0, 0, 0, 0));
 }
 

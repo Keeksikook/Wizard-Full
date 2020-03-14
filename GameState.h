@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "Exploder.h"
 #include "Player.h"
 class GameState :
 	public State
@@ -8,6 +9,8 @@ private:
 	Player wizard;
 	sf::Sprite background;
 	sf::View& playerView;
+	EnemyArray enemies;
+
 public:
 	GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView);
 
@@ -17,6 +20,7 @@ public:
 	virtual void updateInput(const float& dt);
 	virtual void draw(sf::RenderTarget* target = nullptr);
 	virtual int handleEvent(sf::Event& event);
+
 	std::string getType() override { return "GameState"; }
 
 };

@@ -1,7 +1,6 @@
 #pragma once
 #include "Mover.h"
 #include <iostream>
-#include "Definitions.h"
 class Player :
 	public Mover
 {
@@ -11,13 +10,17 @@ private:
 	Animation* animation;
 	bool ifSetAnimation(Animation& animation);
 	void applyFriction(bool horizontal, float dt);
+	float hp = PlayerHP;
+
 public:
 	Player(sf::Vector2f position, AssetManager& manager, std::string animationName);
 
-	void update(float dt) override;
+	bool update(float dt) override;
 	virtual void setAnimation(Animation& animation) override;
 	void updateAnimationType(sf::Vector2f movement);
-	std::string getInfo();
+	void printInfo();
 	void draw(sf::RenderTarget* target) override;
+	void hurt(float damage) { hp -= damage; }
+
 };
 

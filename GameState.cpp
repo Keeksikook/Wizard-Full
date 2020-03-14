@@ -4,10 +4,10 @@
 GameState::GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView)
 	:
 	State(window, manager),
-	wizard({ WorldSizeX * 0.5f, WorldSizeY * 0.5f }, manager, "WizardIdle"),
+	wizard({ WorldSizeX * 0.5f, WorldSizeY * 0.5f }, manager, WizardIdle),
 	playerView(playerView)
 {
-	background.setTexture(manager.texture("Grass"));
+	background.setTexture(manager.texture(Grass));
 	sf::Vector2f backgroundScale(float(WorldSizeX) / 960.f, float(WorldSizeY) / 540.f);
 	background.setScale(backgroundScale);;
 	background.setPosition(0, 0);
@@ -28,6 +28,15 @@ void GameState::update(const float& dt)
 	{
 		updateInput(dt);
 		wizard.update(dt);
+		for (auto it = enemies.begin(); it != enemies.end(); it++)
+		{
+			if ((*it)->update(dt) == false)
+			{
+				enemies.erase(it);
+				break;
+			}
+
+		}
 	}
 }
 
@@ -47,6 +56,8 @@ void GameState::draw(sf::RenderTarget* target)
 	target->setView(playerView);
 	target->draw(background);
 	wizard.draw(target);
+	for (auto& enemy : enemies)
+		enemy.get()->draw(target);
 }
 
 int GameState::handleEvent(sf::Event& event)
@@ -66,8 +77,10 @@ int GameState::handleEvent(sf::Event& event)
 	case sf::Event::MouseMoved:
 		break;
 	case sf::Event::MouseButtonPressed:
+		enemies.emplace_back(new Exploder(sf::Vector2f{WorldSizeX / 2, WorldSizeY / 2}, manager, &wizard, enemies ));
 		break;
 	case sf::Event::KeyPressed:
+		wizard.printInfo();
 		if (event.key.code == sf::Keyboard::P)
 		{
 			togglePause();
@@ -78,7 +91,7 @@ int GameState::handleEvent(sf::Event& event)
 		}
 		if (event.key.code == sf::Keyboard::Enter)
 		{
-			std::cout << wizard.getInfo();
+			//enemies.back().get()->coutInfo();
 		}
 		else if (event.key.code == sf::Keyboard::BackSpace)
 		{

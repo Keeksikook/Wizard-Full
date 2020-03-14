@@ -1,12 +1,14 @@
 #include "Player.h"
 
+
 Player::Player(sf::Vector2f position, AssetManager& manager, std::string animationName)
 	:
-	Mover(position, manager, animationName)
+	Mover(position, manager, animationName),
+	animation(&manager.animation(animationName))
 {
 }
 
-void Player::update(float dt)
+bool Player::update(float dt)
 {
 	sf::Vector2f oldPos = getSprite().getPosition();
 
@@ -50,6 +52,8 @@ void Player::update(float dt)
 	}
 
 	getSprite().move(speed);
+	//Keep player inside the world with clampToWorld
+	clampToWorld();
 	sf::Vector2f movement = getSprite().getPosition() - oldPos;
 
 	//if (movement.x > 0)
@@ -61,7 +65,10 @@ void Player::update(float dt)
 	//	lookDirection = LookDirection::Left;
 
 	updateAnimationType(movement);
-	updateAnimation(dt);
+
+	//update animation
+	AnimatedObject::update(dt);
+	return false;
 }
 
 void Player::setAnimation(Animation& animation)
@@ -96,23 +103,23 @@ void Player::applyFriction(bool horizontal, float dt)
 void Player::updateAnimationType(sf::Vector2f movement)
 {
 	if (movement.x > 0)
-		ifSetAnimation(manager.animation("WizardRight"));
+		ifSetAnimation(manager.animation(WizardRight));
 	else if (movement.x < 0)
-		ifSetAnimation(manager.animation("WizardLeft"));
+		ifSetAnimation(manager.animation(WizardLeft));
 	else
 	{
-		ifSetAnimation(manager.animation("WizardIdle"));
+		ifSetAnimation(manager.animation(WizardIdle));
 	}
 }
 
-
-std::string Player::getInfo()
+void Player::printInfo()
 {
-	auto speed_lenght = sqrtf(speed.x * speed.x + speed.y * speed.y);
-	return (std::string)"Pos:[" + std::to_string(getSprite().getPosition().x) + " : " + std::to_string(getSprite().getPosition().y) + "]\nSpd:[" +
-		std::to_string(speed.x) + " : " + std::to_string(speed.y) + "]\nSpd = " + 
-		std::to_string(speed_lenght) + "\n";
+	auto position = getSprite().getPosition();
+	std::cout << "Pos: [" << position.x << ", " << position.y << "]\n";
+	std::cout << "Speed: [" << speed.x << ", " << speed.y <<  "]\n";
+	std::cout << "HP: [" << this->hp << "]\n";
 }
+
 
 void Player::draw(sf::RenderTarget* target)
 {
