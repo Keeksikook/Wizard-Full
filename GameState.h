@@ -1,7 +1,6 @@
 #pragma once
 #include "State.h"
-#include "Exploder.h"
-#include "Player.h"
+#include "EnemySpawner.h"
 class GameState :
 	public State
 {
@@ -10,6 +9,10 @@ private:
 	sf::Sprite background;
 	sf::View& playerView;
 	EnemyArray enemies;
+	EnemySpawner spawner;
+
+	void deleteRelevantLatches(Enemy* enemy);
+	void updateEnemies(float dt);
 
 public:
 	GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView);

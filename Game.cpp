@@ -52,6 +52,7 @@ Game::Game()
 
 	playerView.setSize(WorldSizeX, WorldSizeY);
 	playerView.setCenter(WorldSizeX / 2.f, WorldSizeY / 2.f);
+	playerView.zoom(0.7);
 
 	//Restart clock to fix first deltaTime;
 	dtClock.restart();
@@ -132,8 +133,14 @@ void Game::loadAssets()
 	manager.loadAnimation(ExploderCharging, ExploderCharging_d, ExploderCharging_fc);
 	manager.loadAnimation(ExploderDeath, ExploderDeath_d, ExploderDeath_fc);
 	manager.loadAnimation(ExploderExplosion, Explosion_d, Explosion_fc);
+	manager.loadAnimation(LatcherSpawning, LatcherSpawning_d, LatcherSpawning_fc);
+	manager.loadAnimation(LatcherDeath, LatcherDeath_d, LatcherDeath_fc);
+	manager.loadAnimation(LatcherAttacking, LatcherAttacking_d, LatcherAttacking_fc);
+	manager.loadAnimation(LatcherMoving, LatcherMoving_d, LatcherMoving_fc);
 	manager.loadTexture(SplashScreenImage);
 	manager.loadTexture(Grass);
+
+	//Check exploderdeath
 }
 
 void Game::update()

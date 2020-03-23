@@ -1,5 +1,4 @@
 #pragma once
-#include"SFML/Graphics.hpp"
 #include"AssetManager.h"
 
 class AnimatedObject
@@ -25,6 +24,7 @@ public:
 	virtual void setAnimation(Animation& animation, float progress);
 
 	sf::Sprite& getSprite() { return sprite; }
+	const sf::Sprite& getConstSprite() const { return sprite; }
 	void centerOrigin();
 
 	//Update the object(to be overloaded)

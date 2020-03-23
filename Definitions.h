@@ -19,17 +19,28 @@ constexpr auto WorldSizeX = 16 * 20; //320
 constexpr auto WorldSizeY = 9 * 20; //180
 constexpr auto WindowWidth = 960;
 constexpr auto WindowHeight = 540;
+constexpr auto EnemyCount = 1;
+
 
 constexpr auto PlayerSpeed = 3.f;
 constexpr auto PlayerAccel = 40.f;
 constexpr auto PlayerDecel = 8.f;
 constexpr auto PlayerHP = 2000.f;
 
+constexpr auto ES_Tick = 2.f;
+constexpr auto ES_Growth = 0.01f;
+constexpr auto ES_Accel = 0.3f;
+
 constexpr auto ExploderHP = 1000;
 constexpr auto ExploderDMG = 2000;
 constexpr auto ExploderRange = 8;
 constexpr auto ExploderSpeed = 35.f;
 constexpr auto ExploderChargeTime = 1.2f;
+
+constexpr auto LatcherDamage = 100.f;
+constexpr auto LatcherRange = 60.f;
+constexpr auto LatcherSpeed = 10.f;
+constexpr auto LatcherAttackSpeed = 0.6f;
 
 
 
@@ -88,6 +99,23 @@ constexpr auto ExploderDeath_d = .7f;
 constexpr auto ExploderExplosion = "Assets/Animations/exploder-explosion.png";
 constexpr auto Explosion_fc = 10;
 constexpr auto Explosion_d = .3f;
+//
+constexpr auto LatcherSpawning = "Assets/Animations/latcher-spawn.png";
+constexpr auto LatcherSpawning_fc = 10;
+constexpr auto LatcherSpawning_d = 1.5f;
+
+constexpr auto LatcherMoving = "Assets/Animations/latcher-moving.png";
+constexpr auto LatcherMoving_fc = 10;
+constexpr auto LatcherMoving_d = .3f;
+
+constexpr auto LatcherAttacking = "Assets/Animations/latcher-attacking.png";
+constexpr auto LatcherAttacking_fc = 10;
+constexpr auto LatcherAttacking_d = .3f;
+
+constexpr auto LatcherDeath = "Assets/Animations/latcher-death.png";
+constexpr auto LatcherDeath_fc = 10;
+constexpr auto LatcherDeath_d = 1.5f;
+
 
 
 //Fonts

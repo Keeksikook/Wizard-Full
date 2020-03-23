@@ -15,16 +15,17 @@ private:
 	const float damageDealt(float distance) const;
 
 	enum class state {
-		Moving, Charging, Exploding, Dying
+		Moving, Charging, Exploding
 	};
+
 	state state = state::Moving;
 protected:
 public:
 	Exploder(sf::Vector2f position, AssetManager& manager, Player* player, EnemyArray& enemies);
 
 	virtual bool update(float dt) override;
-	virtual const bool alive() const;
+	virtual const bool isAlive() const;
 	virtual void draw(sf::RenderTarget* target);
-	void coutInfo() const override;
+	virtual const Type getType() const override { return Type::Exploder; }
 };
 

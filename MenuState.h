@@ -1,5 +1,4 @@
 #pragma once
-#include"State.h"
 #include"OptionSelectMM.h"
 #include"AnimatedObject.h"
 

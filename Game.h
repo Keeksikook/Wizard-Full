@@ -1,8 +1,5 @@
 #pragma once
 #include<stack>
-#include<stdio.h>
-#include<iostream>
-#include"MenuState.h"
 #include"SplashScreenState.h"
 #include"GameState.h"
 

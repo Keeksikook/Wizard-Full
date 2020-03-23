@@ -1,5 +1,6 @@
 #include "Exploder.h"
 
+
 const float Exploder::damageDealt(float distance) const
 {
 	//https://gyazo.com/6bc17748f664384b6bc7968fa9388f6d
@@ -28,7 +29,7 @@ bool Exploder::update(float dt)
 
 	if (hp <= 0 && state != state::Charging)
 	{
-		state = state::Dying;
+		state = state::Exploding;
 		setAnimation(manager.animation(ExploderDeath));
 	}
 
@@ -73,12 +74,6 @@ bool Exploder::update(float dt)
 		if (explosionTimer <= 0)
 			return false; //return false, so the vector will delete this object
 	}
-	else if (state == state::Dying)
-	{
-		deathTimer -= dt;
-		if (deathTimer <= 0)
-			return false; //return false, so the vector will delete this object
-	}
 
 
 	//update animation
@@ -86,9 +81,9 @@ bool Exploder::update(float dt)
 	return true;
 }
 
-const bool Exploder::alive() const
+const bool Exploder::isAlive() const
 {
-	return (state != state::Dying && state != state::Exploding);
+	return (explosionTimer > 0);
 }
 
 void Exploder::draw(sf::RenderTarget* target)
@@ -96,9 +91,3 @@ void Exploder::draw(sf::RenderTarget* target)
 	AnimatedObject::draw(target);
 }
 
-void Exploder::coutInfo() const 
-{
-	std::cout << "Charge: " << chargingTimer << "\n";
-	std::cout << "Expl: " << explosionTimer << "\n";
-	std::cout << "death: " << deathTimer << "\n";
-}

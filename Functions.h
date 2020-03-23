@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include <math.h>
 
 namespace func {
 	template<typename T>
@@ -11,5 +12,10 @@ namespace func {
 	sf::Vector2<T> normalized(const sf::Vector2<T> v) {
 		return sf::Vector2<T>(v / lenght(v));
 	}
+
+	double randf(float min, float max);
+
+	sf::Vector2f randDir();
+
 }
 

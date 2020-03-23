@@ -1,17 +1,41 @@
 #include "GameState.h"
 
 
+void GameState::deleteRelevantLatches(Enemy* enemy)
+{
+	for(auto& e : enemies)
+		if (e.get()->getType() == Enemy::Type::Latcher)
+		{
+			reinterpret_cast<Latcher*>(e.get())->remLatch(enemy);
+		}
+}
+
+//Delete every enemy that returns false on update and delete latches to that enemy
+void GameState::updateEnemies(float dt)
+{
+	for (auto it = enemies.begin(); it != enemies.end();)
+	{
+		if (it->get()->update(dt) == false)
+		{
+			deleteRelevantLatches(it->get());
+			it = enemies.erase(it);
+		}
+		else
+			it++;
+	}
+}
+
 GameState::GameState(sf::RenderWindow* window, AssetManager& manager, sf::View& playerView)
 	:
 	State(window, manager),
 	wizard({ WorldSizeX * 0.5f, WorldSizeY * 0.5f }, manager, WizardIdle),
-	playerView(playerView)
+	playerView(playerView),
+	spawner(&wizard, enemies, manager)
 {
 	background.setTexture(manager.texture(Grass));
 	sf::Vector2f backgroundScale(float(WorldSizeX) / 960.f, float(WorldSizeY) / 540.f);
 	background.setScale(backgroundScale);;
 	background.setPosition(0, 0);
-
 	pausable = true;
 }
 
@@ -28,15 +52,9 @@ void GameState::update(const float& dt)
 	{
 		updateInput(dt);
 		wizard.update(dt);
-		for (auto it = enemies.begin(); it != enemies.end(); it++)
-		{
-			if ((*it)->update(dt) == false)
-			{
-				enemies.erase(it);
-				break;
-			}
-
-		}
+		playerView.setCenter(wizard.getSprite().getPosition());
+		//spawner.tick(dt);
+		updateEnemies(dt);
 	}
 }
 
@@ -47,17 +65,14 @@ void GameState::updateInput(const float& dt)
 
 void GameState::draw(sf::RenderTarget* target)
 {
-	if (D_COUT)
-	{
-		std::cout << "Origin: " << wizard.getSprite().getOrigin().x << " : " << wizard.getSprite().getOrigin().y << "\n";
-		std::cout << "pos: " << wizard.getSprite().getPosition().x << " : " << wizard.getSprite().getPosition().y << "\n";
-	}
-
 	target->setView(playerView);
+
 	target->draw(background);
-	wizard.draw(target);
+
 	for (auto& enemy : enemies)
 		enemy.get()->draw(target);
+
+	wizard.draw(target);
 }
 
 int GameState::handleEvent(sf::Event& event)
@@ -78,9 +93,9 @@ int GameState::handleEvent(sf::Event& event)
 		break;
 	case sf::Event::MouseButtonPressed:
 		enemies.emplace_back(new Exploder(sf::Vector2f{WorldSizeX / 2, WorldSizeY / 2}, manager, &wizard, enemies ));
+		enemies.emplace_back(new Latcher(sf::Vector2f{ WorldSizeX / 2, WorldSizeY / 2 }, manager, &wizard, enemies));
 		break;
 	case sf::Event::KeyPressed:
-		wizard.printInfo();
 		if (event.key.code == sf::Keyboard::P)
 		{
 			togglePause();
